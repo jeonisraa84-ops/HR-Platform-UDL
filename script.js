@@ -1,45 +1,65 @@
 const app = {
+    // طلب تجريبي يظهر للموظفات (ليلى/سارة/إسراء)
+    requests: [
+        { id: 101, name: "سهلي رضا", doc: "شهادة عمل", status: "جديد" }
+    ],
+
     users: {
-        // فريق الإدارة المعالج
-        "ليلى": { name: "ليلى", rank: "ملحق إدارة رئيسي (فريق المعالجة)", role: "admin", avatar: "L" },
-        "حبار سارة": { name: "حبار سارة", rank: "ملحق إدارة رئيسي (فريق المعالجة)", role: "admin", avatar: "S" },
-        "قندسي منار اسراء": { name: "قندسي منار اسراء", rank: "ملحق إدارة رئيسي (فريق المعالجة)", role: "admin", avatar: "E" },
-        
-        // قائمة المتعاقدين والأعوان
-        "عدة بشير سعيد": { name: "عدة بشير سعيد", rank: "حارس", role: "user", avatar: "B" },
-        "قداري قويدر": { name: "قداري قويدر", rank: "حارس", role: "user", avatar: "Q" },
-        "رحالي ستي": { name: "رحالي ستي", rank: "حارس", role: "user", avatar: "R" },
-        "مفتاح عباس": { name: "مفتاح عباس", rank: "عون وقاية ثانٍ", role: "user", avatar: "M" },
-        "عابد محي الدين": { name: "عابد محي الدين", rank: "عون وقاية ثانٍ", role: "user", avatar: "A" },
-        "مجوبة عبد الحق": { name: "مجوبة عبد الحق", rank: "عامل مهني ثالث", role: "user", avatar: "H" },
-        "غمبازة عبد الرحمان": { name: "غمبازة عبد الرحمان", rank: "عامل مهني ثالث", role: "user", avatar: "G" },
-        "بكرة نصر الدين": { name: "بكرة نصر الدين", rank: "عامل مهني أول", role: "user", avatar: "N" },
+        "ليلى": { name: "ليلى", rank: "ملحق إدارة رئيسي", role: "admin", avatar: "L" },
+        "حبار سارة": { name: "حبار سارة", rank: "ملحق إدارة رئيسي", role: "admin", avatar: "S" },
+        "قندسي منار اسراء": { name: "قندسي منار اسراء", rank: "ملحق إدارة رئيسي", role: "admin", avatar: "E" },
         "سهلي رضا": { name: "سهلي رضا", rank: "عامل مهني أول", role: "user", avatar: "S" },
-        "يحياوي عبد الرزاق": { name: "يحياوي عبد الرزاق", rank: "عامل مهني أول", role: "user", avatar: "Y" }
+        "عدة بشير سعيد": { name: "عدة بشير سعيد", rank: "حارس", role: "user", avatar: "B" },
+        "مفتاح عباس": { name: "مفتاح عباس", rank: "عون وقاية ثانٍ", role: "user", avatar: "M" }
     },
 
     login: function() {
         const val = document.getElementById('nameInput').value.trim();
         if (this.users[val]) {
-            const u = this.users[val];
+            this.user = this.users[val];
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('appPage').style.display = 'flex';
-            document.getElementById('uName').innerText = u.name;
-            document.getElementById('uRank').innerText = u.rank;
-            document.getElementById('avatar').innerText = u.avatar;
+            document.getElementById('uName').innerText = this.user.name;
+            document.getElementById('uRank').innerText = this.user.rank;
+            document.getElementById('avatar').innerText = this.user.avatar;
+            this.setupUI();
+        } else { alert("عذراً.. الاسم غير موجود!"); }
+    },
 
-            if (u.role === "admin") {
-                document.getElementById('adminView').style.display = 'block';
-                document.getElementById('userView').style.display = 'none';
-                document.getElementById('navTitle').innerText = "✨ لوحة معالجة ملفات المتعاقدين";
-            } else {
-                document.getElementById('adminView').style.display = 'none';
-                document.getElementById('userView').style.display = 'block';
-                document.getElementById('navTitle').innerText = "📋 بوابة طلباتك الإدارية";
-            }
+    setupUI: function() {
+        if (this.user.role === "admin") {
+            document.getElementById('adminView').style.display = 'block';
+            document.getElementById('userView').style.display = 'none';
+            document.getElementById('navTitle').innerText = "📋 لوحة معالجة الملفات الواردة";
+            this.renderTable();
         } else {
-            alert("⚠️ عذراً، هذا الاسم غير مسجل في قاعدة بيانات مصلحة المتعاقدين.");
+            document.getElementById('adminView').style.display = 'none';
+            document.getElementById('userView').style.display = 'block';
+            document.getElementById('navTitle').innerText = "✨ بوابة الطلبات الإلكترونية";
         }
+    },
+
+    renderTable: function() {
+        const body = document.getElementById('adminTableBody');
+        body.innerHTML = this.requests.map(r => `
+            <tr>
+                <td>${r.name}</td>
+                <td>${r.doc}</td>
+                <td style="color:#feca57">قيد الانتظار</td>
+                <td><button class="btn-ready" onclick="app.complete(${r.id})">جاهز للإرسال ✅</button></td>
+            </tr>
+        `).join('') || "<tr><td colspan='4'>لا توجد طلبات حالياً</td></tr>";
+    },
+
+    complete: function(id) {
+        this.requests = this.requests.filter(r => r.id !== id);
+        alert("✅ تم إنجاز الوثيقة وإرسال إشعار للمتعاقد. سيتم حذف الطلب الآن.");
+        this.renderTable();
+    },
+
+    sendRequest: function() {
+        const d = document.getElementById('docSelect').value;
+        alert(`تم إرسال طلب (${d}) للمصلحة. فريق الإدارة سيعالجون طلبك قريباً.`);
     },
 
     showTab: function(t) {
@@ -47,14 +67,6 @@ const app = {
         document.getElementById('guideTab').style.display = (t==='guide'?'block':'none');
         document.getElementById('btnHome').classList.toggle('active', t==='home');
         document.getElementById('btnGuide').classList.toggle('active', t==='guide');
-    },
-
-    processDoc: function(name) {
-        alert(`تمت المعالجة بنجاح! تم إرسال وثيقة ${name} وهي جاهزة للاستلام.`);
-    },
-
-    submitRequest: function() {
-        alert("✅ تم إرسال طلبك بنجاح. ستقوم ليلى أو سارة أو إسراء بمعالجته قريباً.");
     },
 
     logout: function() { location.reload(); }
