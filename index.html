@@ -11,80 +11,77 @@
 
     <div id="loginScreen" class="master-container">
         <div class="glass-login-box">
-            <div class="u-logo">UDL</div>
-            <h2 class="purple-text">مصلحة المتعاقدين الرقمية</h2>
+            <h1 class="glow-text">UDL</h1>
+            <h2>مصلحة المتعاقدين الرقمية</h2>
             <p>جامعة جيلالي ليابس | سيدي بلعباس</p>
-            <div class="input-group">
-                <input type="text" id="nameInput" placeholder="أدخلي اسمكِ الكامل (مثلاً: ليلى)">
-                <button class="btn-main-glow" onclick="app.login()">دخول آمن للنظام</button>
-            </div>
+            <input type="text" id="nameInput" placeholder="أدخلي اسمكِ الكامل هنا...">
+            <button class="btn-main-glow" onclick="app.login()">دخول للنظام</button>
         </div>
     </div>
 
     <div id="appPage" class="dashboard-shell" style="display:none;">
-        <aside class="sidebar-modern">
-            <div class="user-profile">
+        <aside class="sidebar-dark">
+            <div class="user-info">
                 <div id="avatar" class="avatar-circle">?</div>
                 <h3 id="uName"></h3>
-                <span id="uRank" class="rank-tag"></span>
+                <span id="uRank" class="rank-label"></span>
             </div>
             <nav class="side-nav">
-                <button id="btnHome" class="nav-item active" onclick="app.showTab('home')">🏠 الرئـيسية</button>
-                <button id="btnGuide" class="nav-item" onclick="app.showTab('guide')">📚 دليل الإجراءات</button>
+                <button id="btnHome" class="nav-item active" onclick="app.showTab('home')">🏠 الرئيسية</button>
+                <button id="btnGuide" class="nav-item" onclick="app.showTab('guide')">📚 دليل الإجراءات الشامل</button>
             </nav>
-            <button class="btn-logout" onclick="app.logout()">خروج آمن ↩</button>
+            <button class="logout-btn" onclick="app.logout()">تسجيل خروج</button>
         </aside>
 
-        <main class="content-area">
-            <div id="homeTab" class="tab-view">
-                <h2 id="navTitle" class="purple-text"></h2>
+        <main class="main-content">
+            <div id="homeTab" class="view-tab">
+                <h2 id="navTitle" class="header-glow"></h2>
                 
-                <div id="adminView" style="display:none;" class="luxury-card fade-in">
-                    <h3>📥 طلبات الموظفين الواردة للمصلحة:</h3>
-                    <table class="admin-table">
+                <div id="adminView" class="dark-card" style="display:none;">
+                    <h3>📥 الطلبات الواردة للمصلحة:</h3>
+                    <table class="luxury-table">
                         <thead>
-                            <tr><th>صاحب الطلب</th><th>نوع الوثيقة</th><th>الحالة</th><th>الإجراء</th></tr>
+                            <tr><th>المتعاقد</th><th>نوع الوثيقة</th><th>الحالة</th><th>الإجراء</th></tr>
                         </thead>
-                        <tbody>
-                            <tr><td>عدة بشير سعيد</td><td>شهادة عمل</td><td><span class="status-badge">قيد الانتظار</span></td><td><button class="btn-process" onclick="app.processDoc('عدة بشير')">تجهيز وإرسال</button></td></tr>
-                            <tr><td>مفتاح عباس</td><td>كشف راتب</td><td><span class="status-badge">جديد</span></td><td><button class="btn-process" onclick="app.processDoc('مفتاح عباس')">تجهيز وإرسال</button></td></tr>
-                        </tbody>
+                        <tbody id="adminTableBody"></tbody>
                     </table>
                 </div>
 
-                <div id="userView" style="display:none;" class="luxury-card fade-in">
-                    <h3>مرحباً بك.. يرجى اختيار الخدمة المطلوبة:</h3>
+                <div id="userView" class="dark-card" style="display:none;">
+                    <h3>تقديم طلب جديد:</h3>
                     <div class="user-form">
                         <select id="docSelect">
-                            <option>طلب شهادة عمل (Attestation de travail)</option>
-                            <option>كشف راتب شهري (Fiche de Paie)</option>
+                            <option>طلب شهادة عمل</option>
+                            <option>طلب كشف راتب</option>
                             <option>طلب تجديد العقد السنوي</option>
-                            <option>طلب عطلة (مرضية/سنوية)</option>
                         </select>
-                        <button class="btn-action" onclick="app.submitRequest()">إرسال الطلب للمصلحة</button>
+                        <button class="btn-action" onclick="app.sendRequest()">إرسال الطلب للمصلحة</button>
                     </div>
                 </div>
             </div>
 
-            <div id="guideTab" class="tab-view" style="display:none;">
-                <div class="luxury-card fade-in">
-                    <h2 class="purple-text">📖 الدليل الموحد لإجراءات مصلحة المتعاقدين</h2>
-                    <div class="guide-content">
-                        <div class="guide-box">
-                            <h4>📋 توظيف وتجديد العقود</h4>
-                            <p>يتم تجديد عقود الأعوان المتعاقدين سنوياً بناءً على تقييم المردودية. يجب إيداع ملف التجديد لدى مصلحتنا قبل تاريخ 15 ديسمبر من كل سنة ميلادية.</p>
+            <div id="guideTab" class="view-tab" style="display:none;">
+                <div class="dark-card">
+                    <h2 class="header-glow">📖 دليل الإجراءات والقوانين</h2>
+                    <div class="guide-scroll-area">
+                        <div class="guide-section">
+                            <h4>📌 أولاً: نظام التوظيف والعقود</h4>
+                            <p>تخضع علاقة العمل للأعوان المتعاقدين للمرسوم الرئاسي رقم 07-308. يتم إبرام عقد العمل لمدة محددة (سنة واحدة) قابلة للتجديد بصفة ضمنية أو صريحة بعد تقييم الأداء.</p>
+                            <p>يجب تقديم طلب تجديد العقد قبل تاريخ 15 ديسمبر من كل سنة مشفوعاً بتقرير المسؤول المباشر.</p>
                         </div>
-                        <div class="guide-box">
-                            <h4>📜 استخراج الوثائق الإدارية</h4>
-                            <p>تتم معالجة طلبات شهادات العمل وكشوف الرواتب خلال مدة أقصاها 24 ساعة. بالنسبة لشهادات توقيف الراتب، تتطلب حضور المعني شخصياً للمصلحة.</p>
+                        <div class="guide-section">
+                            <h4>⚖️ ثانياً: الحقوق والواجبات الإدارية</h4>
+                            <p>يستفيد المتعاقد من كافة حقوق الضمان الاجتماعي، التقاعد، وحوادث العمل منذ تاريخ تنصيبه.</p>
+                            <p>يلتزم المتعاقد باحترام السر المهني، المواظبة، وتنفيذ المهام المسندة إليه من طرف رؤسائه السلميين.</p>
                         </div>
-                        <div class="guide-box">
-                            <h4>⚖️ الحقوق والضمانات القانونية</h4>
-                            <p>يخضع الأعوان المتعاقدون لأحكام المرسوم الرئاسي 07-308، ويستفيدون من كافة حقوق الضمان الاجتماعي والعطل مدفوعة الأجر والراحة القانونية.</p>
+                        <div class="guide-section">
+                            <h4>🕒 ثالثاً: نظام الغيابات والعطل</h4>
+                            <p>يستفيد الموظف من عطلة سنوية مدتها 30 يوماً. أما العطل المرضية فيجب تبريرها بشهادة طبية خلال 48 ساعة وإرسالها لمصلحة المتعاقدين.</p>
+                            <p>التأخرات المتكررة تؤدي إلى خصم الساعات غير المنجزة من الراتب الشهري (الأجر مقابل العمل).</p>
                         </div>
-                        <div class="guide-box">
-                            <h4>🕒 نظام الغيابات والتبريرات</h4>
-                            <p>كل غياب يجب أن يبرر بشهادة طبية أو مبرر قانوني في أجل لا يتعدى 48 ساعة، وإلا سيتم تطبيق الاقتطاعات القانونية من الراتب مباشرة.</p>
+                        <div class="guide-section">
+                            <h4>📜 رابعاً: استخراج الوثائق المهنية</h4>
+                            <p>تتم معالجة كشوف الرواتب وشهادات العمل عبر هذه المنصة الرقمية. يتم تسليم الوثائق الجاهزة من طرف الموظفات (إسراء، سارة، ليلى) في مقر المصلحة بعد التأكد من الهوية.</p>
                         </div>
                     </div>
                 </div>
