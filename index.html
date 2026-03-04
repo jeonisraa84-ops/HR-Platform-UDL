@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مصلحة المتعاقدين - UDL</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loginScreen" class="master-container">
+        <div class="glass-login-box">
+            <div class="u-logo">UDL</div>
+            <h2 class="purple-text">مصلحة المتعاقدين الرقمية</h2>
+            <p>جامعة جيلالي ليابس | سيدي بلعباس</p>
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="أدخلي اسمكِ الكامل (مثلاً: ليلى)">
+                <button class="btn-main-glow" onclick="app.login()">دخول آمن للنظام</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="appPage" class="dashboard-shell" style="display:none;">
+        <aside class="sidebar-modern">
+            <div class="user-profile">
+                <div id="avatar" class="avatar-circle">?</div>
+                <h3 id="uName"></h3>
+                <span id="uRank" class="rank-tag"></span>
+            </div>
+            <nav class="side-nav">
+                <button id="btnHome" class="nav-item active" onclick="app.showTab('home')">🏠 الرئـيسية</button>
+                <button id="btnGuide" class="nav-item" onclick="app.showTab('guide')">📚 دليل الإجراءات</button>
+            </nav>
+            <button class="btn-logout" onclick="app.logout()">خروج آمن ↩</button>
+        </aside>
+
+        <main class="content-area">
+            <div id="homeTab" class="tab-view">
+                <h2 id="navTitle" class="purple-text"></h2>
+                
+                <div id="adminView" style="display:none;" class="luxury-card fade-in">
+                    <h3>📥 طلبات الموظفين الواردة للمصلحة:</h3>
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>صاحب الطلب</th><th>نوع الوثيقة</th><th>الحالة</th><th>الإجراء</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>عدة بشير سعيد</td><td>شهادة عمل</td><td><span class="status-badge">قيد الانتظار</span></td><td><button class="btn-process" onclick="app.processDoc('عدة بشير')">تجهيز وإرسال</button></td></tr>
+                            <tr><td>مفتاح عباس</td><td>كشف راتب</td><td><span class="status-badge">جديد</span></td><td><button class="btn-process" onclick="app.processDoc('مفتاح عباس')">تجهيز وإرسال</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="userView" style="display:none;" class="luxury-card fade-in">
+                    <h3>مرحباً بك.. يرجى اختيار الخدمة المطلوبة:</h3>
+                    <div class="user-form">
+                        <select id="docSelect">
+                            <option>طلب شهادة عمل (Attestation de travail)</option>
+                            <option>كشف راتب شهري (Fiche de Paie)</option>
+                            <option>طلب تجديد العقد السنوي</option>
+                            <option>طلب عطلة (مرضية/سنوية)</option>
+                        </select>
+                        <button class="btn-action" onclick="app.submitRequest()">إرسال الطلب للمصلحة</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="guideTab" class="tab-view" style="display:none;">
+                <div class="luxury-card fade-in">
+                    <h2 class="purple-text">📖 الدليل الموحد لإجراءات مصلحة المتعاقدين</h2>
+                    <div class="guide-content">
+                        <div class="guide-box">
+                            <h4>📋 توظيف وتجديد العقود</h4>
+                            <p>يتم تجديد عقود الأعوان المتعاقدين سنوياً بناءً على تقييم المردودية. يجب إيداع ملف التجديد لدى مصلحتنا قبل تاريخ 15 ديسمبر من كل سنة ميلادية.</p>
+                        </div>
+                        <div class="guide-box">
+                            <h4>📜 استخراج الوثائق الإدارية</h4>
+                            <p>تتم معالجة طلبات شهادات العمل وكشوف الرواتب خلال مدة أقصاها 24 ساعة. بالنسبة لشهادات توقيف الراتب، تتطلب حضور المعني شخصياً للمصلحة.</p>
+                        </div>
+                        <div class="guide-box">
+                            <h4>⚖️ الحقوق والضمانات القانونية</h4>
+                            <p>يخضع الأعوان المتعاقدون لأحكام المرسوم الرئاسي 07-308، ويستفيدون من كافة حقوق الضمان الاجتماعي والعطل مدفوعة الأجر والراحة القانونية.</p>
+                        </div>
+                        <div class="guide-box">
+                            <h4>🕒 نظام الغيابات والتبريرات</h4>
+                            <p>كل غياب يجب أن يبرر بشهادة طبية أو مبرر قانوني في أجل لا يتعدى 48 ساعة، وإلا سيتم تطبيق الاقتطاعات القانونية من الراتب مباشرة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
